@@ -1,0 +1,158 @@
+<!-- Template page: This settings page offers various input field to gather settings information -->
+
+{% extends "masterPage.html" %}
+
+{% block content %}
+<div class="row">
+        
+        <!-- Middle Rail -->
+        <div class="col-12 col-xl-12 col-md-12" style="padding-left: 120px; padding-right: 120px;">
+            <div class="panel panel--loose panel--raised base-margin-bottom base-margin-top">
+                <form action="/p2ptool/add-device" method="POST"> 
+                    <div class="section"> 
+                        <div class="row">   
+                            <div class="col-6" style="padding-left: 30px;padding-right: 30px;">  
+                            <h5>Radio 1 (2.4GHz)</h5><hr>   <div class="form-group base-margin-bottom">
+                                <div class="form-group__text">
+                                        <input name="model" type="text">
+                                        <label for="model">Model name</label>
+                                    </div>
+                                </div>                                       
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="ss1" type="number">
+                                        <label for="ss1">Number of spatial streams</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="mcs1" type="number">
+                                        <label for="mcs1">MCS limit</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="bf1" type="number">
+                                        <label for="bf1">Beamforming</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="txss1" type="number">
+                                        <label for="txss1">TX Spatial Streams</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="rxss1" type="number">
+                                        <label for="rxss1">RX Spatial Streams</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="nf1" type="number">
+                                        <label for="nf1">Noise figure</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div id="input-type-select" class="form-group__text select">
+                                        <select name="bi1">
+                                            {% for key, value in antennas.items() %}
+                                                <option value="{{key}}" disabled>{{ key }}</option>
+                                                {% for a_key, antenna in value.items() %}
+                                                <option value="{{a_key}}" >{{ a_key }}</option>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </select>
+                                        <label for="input-type-select">Built-in antenna</label>
+                                    </div>
+                                </div>
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="pl11" type="number">
+                                        <label for="pl11">Power Level 1</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="pl21" type="number">
+                                        <label for="pl21">Power Level 2</label>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="col-6" style="padding-left: 30px;padding-right: 30px;">  
+                                <h5>Radio 2 (5GHz)</h5><hr>                                         
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="ss2" type="number">
+                                        <label for="ss2">Number of spatial streams</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="mcs2" type="number">
+                                        <label for="mcs2">MCS limit</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="bf2" type="number">
+                                        <label for="bf2">Beamforming</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="txss2" type="number">
+                                        <label for="txss2">TX Spatial Streams</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="rxss2" type="number">
+                                        <label for="rxss2">RX Spatial Streams</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="nf2" type="number">
+                                        <label for="nf2">Noise figure</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div id="input-type-select" class="form-group__text select">
+                                        <select name="bi2">
+                                            {% for key, value in antennas.items() %}
+                                                <option value="{{key}}" disabled>{{ key }}</option>
+                                                {% for a_key, antenna in value.items() %}
+                                                <option value="{{a_key}}" >{{ a_key }}</option>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </select>
+                                        <label for="input-type-select">Built-in antenna</label>
+                                    </div>
+                                </div>
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="pl12" type="number">
+                                        <label for="pl12">Power Level 1</label>
+                                    </div>
+                                </div> 
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="pl22" type="number">
+                                        <label for="pl22">Power Level 2</label>
+                                    </div>
+                                </div> 
+                        </div>
+                    </div>
+                    <div style="text-align: right; margin-top: 20px;">
+                        <button class="btn btn--primary" type="submit" style="color: white;font-size:large;">Submit</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+{%  endblock %}

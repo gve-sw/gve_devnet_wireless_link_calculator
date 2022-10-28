@@ -1,0 +1,47 @@
+<!-- Template page: This settings page offers various input field to gather settings information -->
+
+{% extends "masterPage.html" %}
+
+{% block content %}
+<div class="row">
+        
+        <!-- Middle Rail -->
+        <div class="col-12 col-xl-12 col-md-12" style="padding-left: 120px; padding-right: 120px;">
+            <div class="panel panel--loose panel--raised base-margin-bottom base-margin-top">
+                <form action="/p2ptool/add-antenna" method="POST"> 
+                    <div class="section"> 
+                        <h5>Antenna details</h5><hr>   
+                        <h6 style="font-style: italic;margin-bottom: 20px;">If the antenna is capable of both 2.4GHz and 5GHz, please submit this form twice (once for each frequency)</h6>
+                        <div class="form-group base-margin-bottom">
+                            <div class="form-group__text">
+                                <input name="model" type="text">
+                                <label for="model">Antenna model</label>
+                            </div>
+                        </div> 
+                        <div class="form-group base-margin-bottom">
+                            <div id="input-type-select" class="form-group__text select">
+                                <select name="frequency">
+                                    <option value="none" disabled selected>Select frequency...</option>
+                                    <option value="2.4ghz">2.4GHz</option>
+                                    <option value="5ghz" >5GHz</option>
+                                </select>
+                                <label for="input-type-select">Frequency</label>
+                            </div>
+                        </div>                                      
+                        <div class="form-group base-margin-bottom">
+                            <div class="form-group__text">
+                                <input name="gain" type="number">
+                                <label for="gain">Antenna gain (in dB)</label>
+                            </div>
+                        </div> 
+                    </div>
+                    <div style="text-align: right; margin-top: 20px;">
+                        <button class="btn btn--primary" type="submit" style="color: white;font-size:large;">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+{%  endblock %}

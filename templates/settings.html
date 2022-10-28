@@ -1,0 +1,230 @@
+<!-- Template page: This settings page offers various input field to gather settings information -->
+
+    {% extends "masterPage.html" %}
+
+    {% block content %}
+    <div class="row">
+            
+            <!-- Left Rail -->
+            <!-- Menu element-->
+    
+            <!-- Middle Rail -->
+            <div class="col-12 col-xl-12 col-md-12" style="padding-left: 120px; padding-right: 120px;">
+                {% if error %}
+                <div class="alert alert--danger" role="alert">
+                    <div class="alert__icon icon-error-outline"></div>
+                    <div class="alert__message">{{errormessage}}</div>
+                </div>
+                {% endif %}
+
+                <div class="panel panel--loose panel--raised base-margin-bottom base-margin-top">
+                    <form action="/p2ptool/" method="POST" name="envVars"> 
+                        <div class="section"> 
+                            <div class="row">   
+                                <div class="col-4" style="padding-left: 30px;padding-right: 30px;">  
+                                <h5>Environment</h5><hr>                                         
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="range" type="number" value="{{ settings.desiredrange * 1.609 }}" onfocus="showOriginalText('Start Demo')">
+                                        <label for="value1">Desired range (in km)</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="datarate" type="number" value="{{ settings.desiredrate }}" onfocus="showOriginalText('Start Demo')">
+                                        <label for="value1">Desired data rate (in Mbps)</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text select">
+                                        <select id="input-type-select" name="domain">
+                                            <option value="US" {% if settings.domain == "US" %} selected="" {% endif %}>US</option>
+                                            <option value="EU" {% if settings.domain == "EU" %} selected="" {% endif %}>EU</option>
+                                        </select>
+                                        <label for="input-type-select">Regulatory domain</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text select">
+                                        <select id="frequency-select" name="frequency">
+                                            <option value="2.4ghz" {% if settings.frequency == "2.4ghz" %} selected="" {% endif %}>2.4GHz</option>
+                                            <option value="5ghz" {% if settings.frequency == "5ghz" %} selected="" {% endif %}>5GHz</option>
+                                        </select>
+                                        <label for="input-type-select">Frequency</label>
+                                    </div>
+                                </div>
+
+                                <div id="bw-select" class="form-group base-margin-bottom">
+                                    <div class="form-group__text select">
+                                        <select name="bandwidth">
+                                            <option value="20" {% if settings.bandwidth == "20" %} selected="" {% endif %}>20MHz</option>
+                                            <option value="40" {% if settings.bandwidth == "40" %} selected="" {% endif %}>40MHz</option>
+                                            <option value="80" {% if settings.bandwidth == "80" %} selected="" {% endif %}>80MHz</option>
+                                        </select>
+                                        <label for="input-type-select">Bandwidth</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text select">
+                                        <select id="channel-select" name="channel">
+                                            <option id="24ghzin" value="2.4ghzin" {% if settings.channel == "2.4ghzin" %} selected="" {% endif %} {% if settings.frequency == "5ghz" %} hidden {% endif %}>2.4GHz (in)</option>
+                                            <option id="24ghzout" value="2.4ghzout" {% if settings.channel == "2.4ghzout" %} selected="" {% endif %} {% if settings.frequency == "5ghz" %} hidden {% endif %}>2.4GHz (out)</option>
+                                            <option id="unii1" value="unii1" {% if settings.channel == "unii1" %} selected="" {% endif %} {% if settings.frequency == "2.4ghz" %} hidden {% endif %}>UNII-1</option>
+                                            <option id="unii2" value="unii2" {% if settings.channel == "unii2" %} selected="" {% endif %} {% if settings.frequency == "2.4ghz" %} hidden {% endif %}>UNII-2</option>
+                                            <option id="unii2e" value="unii2e" {% if settings.channel == "unii2e" %} selected="" {% endif %} {% if settings.frequency == "2.4ghz" %} hidden {% endif %}>UNII-2e</option>
+                                            <option id="unii3" value="unii2e" {% if settings.channel == "unii2e" %} selected="" {% endif %} {% if settings.frequency == "2.4ghz" %} hidden {% endif %}>UNII-3</option>
+                                            <option id="58ghz" value="5.8ghz" {% if settings.channel == "5.8ghz" %} selected="" {% endif %} {% if settings.frequency == "2.4ghz" %} hidden {% endif %}>5.8GHz</option>
+                                        </select>
+                                        <label for="input-type-select">Channel</label>
+                                    </div>
+                                </div>
+                            
+                                
+
+                            </div>
+
+                            <div class="col-4" style="padding-left: 30px;padding-right: 30px;">
+                                <h5>TX Device</h5><hr>
+                                <div id="tx-select" class="form-group base-margin-bottom">
+                                    <div class="form-group__text select">
+                                        <select name="txdevice">
+                                            {% for key, value in devices.items() %}
+                                                <option value="{{key}}" {% if settings.txdevice == "{{key}}" %} selected="" {% endif %}>{{ key }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <label for="input-type-select">TX Access Point</label>
+                                    </div>
+                                </div>
+                                <div id="tx-select-antenna" class="form-group base-margin-bottom">
+                                    <div class="form-group__text select">
+                                        <select name="txantenna">
+                                            {% for key, value in antennas.items() %}
+                                                <option value="{{key}}" disabled>{{ key }}</option>
+                                                {% for a_key, antenna in value.items() %}
+                                                <option value="{{a_key}}" {% if settings.txantenna == "{{a_key}}" %} selected="" {% endif %}>{{ a_key }}</option>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </select>
+                                        <label for="input-type-select">TX Antenna</label>
+                                    </div>
+                                </div>
+                                <div id="tx-select-cable" class="form-group base-margin-bottom">
+                                    <div class="form-group__text select">
+                                        <select name="txcable">
+                                            {% for key, value in cables.items() %}
+                                                <option value="{{key}}" disabled>{{ key }}</option>
+                                                {% for c_key, cable in value.items() %}
+                                                <option value="{{c_key}}" {% if settings.txcable == "{{c_key}}" %} selected="" {% endif %}>{{ c_key }}</option>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </select>
+                                        <label for="input-type-select">TX Cable</label>
+                                    </div>
+                                </div>
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="height1" type="number" value="{{ settings.height1 }}" onfocus="showOriginalText('Start Demo')">
+                                        <label for="height1">Satellite height (in meter)</label>
+                                    </div>
+                                </div>    
+                            </div>
+                            
+                            <div class="col-4" style="padding-left: 30px;padding-right: 30px;">
+                                <h5>RX Device</h5><hr>
+                                <div id="tx-select" class="form-group base-margin-bottom">
+                                    <div class="form-group__text select">
+                                        <select name="rxdevice">
+                                            {% for key, value in devices.items() %}
+                                                <option value="{{key}}" {% if settings.rxdevice == "{{key}}" %} selected="" {% endif %}>{{ key }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <label for="input-type-select">RX Access Point</label>
+                                    </div>
+                                </div>
+                                <div id="tx-select-antenna" class="form-group base-margin-bottom">
+                                    <div class="form-group__text select">
+                                        <select name="rxantenna">
+                                            {% for key, value in antennas.items() %}
+                                                <option value="{{key}}" disabled>{{ key }}</option>
+                                                {% for a_key, antenna in value.items() %}
+                                                <option value="{{a_key}}" {% if settings.rxantenna == "{{a_key}}" %} selected="" {% endif %}>{{ a_key }}</option>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </select>
+                                        <label for="input-type-select">RX Antenna</label>
+                                    </div>
+                                </div>
+                                <div id="tx-select-cable" class="form-group base-margin-bottom">
+                                    <div class="form-group__text select">
+                                        <select name="rxcable">
+                                            {% for key, value in cables.items() %}
+                                                <option value="{{key}}" disabled>{{ key }}</option>
+                                                {% for c_key, cable in value.items() %}
+                                                <option value="{{c_key}}" {% if settings.rxcable == "{{c_key}}" %} selected="" {% endif %}>{{ c_key }}</option>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </select>
+                                        <label for="input-type-select">RX Cable</label>
+                                    </div>
+                                </div>
+                                <div class="form-group base-margin-bottom">
+                                    <div class="form-group__text">
+                                        <input name="height2" value="{{ settings.height2 }}" type="number" onfocus="showOriginalText('Start Demo')">
+                                        <label for="height2">Satellite height (in meter)</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            </div>
+                            <div class="row" style="float:right;">
+                                <!-- Button area-->
+                                <input style="margin-right: 30px;"  id="settings-submit" onclick="showLoadingText()" class="btn btn-primary base-margin-top" type="submit" value="Calculate">
+                            </div> 
+                        </div>    
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Results -->
+        <div class="row">
+        <div class="col-12 col-xl-12 col-md-12" style="padding-left: 120px; padding-right: 120px;">
+            {% if calculated %}
+                <div class="panel panel--loose panel--raised base-margin-bottom base-margin-top">
+                    <div class="container-fluid">
+                    <div class="section">
+                        <h5>Results</h5><hr>
+                        <div class="responsive-table">
+                            <table class="table table--lined table--selectable table">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Value</th>
+                                        <th>Unit</th>
+                                        <th>Alerts</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for metric in metrics %}
+                                    <tr>
+                                        <td><b>{{ metric['metric'] }}</b></td>
+                                        <td>{{ metric['value'] }}</td>
+                                        <td>{{ metric['unit'] }}</td>
+                                        <td>{% for alert in metric['alerts'] %}<span class="label label--danger">{{alert}}</span>{% endfor %}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+        </div>
+        </div>
+  
+    {%  endblock %}

@@ -1,0 +1,58 @@
+{
+  "AP1570": {
+    "2.4ghz": {
+      "spatial-streams": 3,
+      "mcs-limit": 8,
+      "beamforming": 4,
+      "tx-ss": 4,
+      "rx-ss": 4,
+      "noise-figure": 5,
+      "builtin-antenna": "ANT1570i",
+      "PL": {
+        "PL1": 30,
+        "PL2": 27
+      }
+    },
+    "5ghz": {
+      "spatial-streams": 3,
+      "mcs-limit": 10,
+      "beamforming": 4,
+      "tx-ss": 4,
+      "rx-ss": 4,
+      "noise-figure": 5,
+      "builtin-antenna": "ANT1570i",
+      "PL": {
+        "PL1": 30,
+        "PL2": 27
+      }
+    }
+  },
+  "AP1550": {
+    "2.4ghz": {
+      "spatial-streams": 2,
+      "mcs-limit": 8,
+      "beamforming": 0,
+      "tx-ss": 2,
+      "rx-ss": 3,
+      "noise-figure": 6,
+      "builtin-antenna": "ANT1550i",
+      "PL": {
+        "PL1": 28,
+        "PL2": 25
+      }
+    },
+    "5ghz": {
+      "spatial-streams": 2,
+      "mcs-limit": 8,
+      "beamforming": 0,
+      "tx-ss": 2,
+      "rx-ss": 3,
+      "noise-figure": 6,
+      "builtin-antenna": "ANT1550i",
+      "PL": {
+        "PL1": 27,
+        "PL2": 24
+      }
+    }
+  }
+}
